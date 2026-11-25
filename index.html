@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Voice2Sell</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Hind+Madurai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f8fd;--sky:#dcebf8;--ink:#0c2340;--mute:#47607c;--navy:#0f3a6b;--blue:#2f6fb5;--gold:#f2b134;--line:#b9cfe6;--card:#fff;--onnavy:#fff;
+--serif:"Libre Baskerville",Georgia,serif;--sans:"Hind Madurai","Noto Sans Tamil",system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a1a2f;--sky:#12294a;--ink:#e8f0fa;--mute:#9db3cc;--navy:#8dbbee;--blue:#6aa3e0;--line:#27456b;--card:#10253f;--onnavy:#0a1a2f}}
+:root[data-theme="dark"]{--bg:#0a1a2f;--sky:#12294a;--ink:#e8f0fa;--mute:#9db3cc;--navy:#8dbbee;--blue:#6aa3e0;--line:#27456b;--card:#10253f;--onnavy:#0a1a2f}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 var(--sans)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);color:var(--navy);line-height:1.25;margin:0}
+.w{max-width:960px;margin:0 auto;padding:0 18px}
+nav{border-bottom:1px solid var(--line);background:var(--card)}
+nav .w{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px}
+.logo{font:700 21px var(--serif);color:var(--navy);margin-right:auto}.logo i{font-weight:400;color:var(--blue)}
+nav a{padding:6px 14px;border-radius:4px;color:var(--mute);text-decoration:none;font-weight:500}
+nav a.on{background:var(--navy);color:var(--onnavy)}
+.view{display:none;padding:28px 0 56px}.view.on{display:block}
+.app{max-width:440px;margin:0 auto}
+.steps{display:flex;gap:4px;margin-bottom:18px;font-size:13.5px}
+.steps span{flex:1;border-top:4px solid var(--line);padding-top:4px;color:var(--mute)}
+.steps span.on{border-color:var(--blue);color:var(--navy);font-weight:600}.steps span.done{border-color:var(--navy)}
+.screen{display:none}.screen.on{display:block}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:22px}
+.panel h2{font-size:24px;margin-bottom:6px}.panel p.s{color:var(--mute);margin:0 0 14px}
+label{display:block;font-size:14px;color:var(--mute);margin:12px 0 3px}
+input,select,textarea,button{font:inherit;color:var(--ink)}
+input,select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:10px 12px}
+.btn{background:var(--navy);color:var(--onnavy);border:0;border-radius:4px;padding:11px 20px;font-weight:600;cursor:pointer;margin-top:16px;width:100%}
+.btn.alt{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+.micwrap{text-align:center;padding:10px 0}
+.mic{width:96px;height:96px;border-radius:50%;border:0;background:var(--gold);color:#3a2800;font-size:40px;cursor:pointer}
+.mic.on{animation:p 1.1s infinite}@keyframes p{50%{box-shadow:0 0 0 18px rgba(242,177,52,.28)}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none;outline:4px solid var(--navy)}}
+.heard{min-height:3.2em;margin:14px 0 4px;padding:10px 12px;border-left:4px solid var(--blue);background:var(--sky);border-radius:0 4px 4px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{background:var(--sky);border:1px solid var(--line);border-radius:16px;padding:5px 12px;font-size:14px;cursor:pointer;text-align:left}
+.msg{min-height:1.5em;color:var(--blue);font-size:15px;margin:10px 0 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.flag{color:#a8590a}
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px;margin-top:18px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.item.new{border:2px solid var(--gold)}
+.pic{height:96px;display:grid;place-items:center;font:700 40px var(--serif);color:var(--onnavy)}
+.item .b{padding:12px 14px 14px}.item .pr{font:700 20px var(--serif);color:var(--navy)}.item small{color:var(--mute);display:block}
+.item .btn{margin-top:10px;padding:8px}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:24px}
+.cols h3{margin-bottom:6px}ul{padding-left:20px;margin:6px 0}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 18px}dt{color:var(--mute)}dd{margin:0}
+@media(max-width:700px){.cols{grid-template-columns:1fr}}
+</style></head><body>
+<nav><div class="w"><span class="logo">Voice<i>2</i>Sell</span><a href="#sell" data-v="sell">Sell</a><a href="#shop" data-v="shop">Shop</a><a href="#about" data-v="about">About</a></div></nav>
+<main class="w">
+
+<section class="view" id="v-sell"><div class="app">
+<div class="steps"><span id="s1">Speak</span><span id="s2">Convert</span><span id="s3">Review</span><span id="s4">Publish</span></div>
+
+<div class="screen" id="sc-in"><div class="panel">
+<h2>Seller sign in</h2><p class="s">Enter your shop name and mobile number to start listing.</p>
+<label for="shopn">Shop name</label><input id="shopn" value="Lakshmi Stores" autocomplete="off">
+<label for="ph">Mobile number</label><input id="ph" inputmode="numeric" placeholder="10-digit number" autocomplete="off">
+<button class="btn" id="go">Continue</button><p class="msg" id="m0" aria-live="polite"></p></div></div>
+
+<div class="screen" id="sc-voice"><div class="panel">
+<h2>Say what you are selling</h2><p class="s">Name, quantity and price. For example: “Tomatoes one kilo forty rupees”.</p>
+<label for="lang">Language</label><select id="lang"><option value="en-IN">English</option><option value="ta-IN">தமிழ் (Tamil)</option></select>
+<div class="micwrap"><button class="mic" id="mic" aria-label="Start speaking">🎙</button></div>
+<div class="heard" id="heard" aria-live="polite">Tap the mic and speak.</div>
+<div class="chips"><button class="chip" data-s="Fresh tomatoes one kilo forty rupees from our farm">No mic? Try: Fresh tomatoes one kilo forty rupees…</button>
+<button class="chip" data-s="நாட்டுச் சர்க்கரை ஒரு கிலோ எண்பது ரூபாய் எங்கள் ஊர் தயாரிப்பு">நாட்டுச் சர்க்கரை ஒரு கிலோ எண்பது ரூபாய்…</button></div>
+<p class="msg" id="m1" aria-live="polite"></p></div></div>
+
+<div class="screen" id="sc-rev"><div class="panel">
+<h2>Check the details</h2><p class="s" id="revnote">Fix anything the app heard wrongly, then publish.</p>
+<label for="fn">Product name</label><input id="fn" autocomplete="off">
+<div class="g2"><div><label for="fq">Quantity</label><input id="fq" autocomplete="off"></div><div><label for="fp">Price (₹)</label><input id="fp" inputmode="numeric" autocomplete="off"></div></div>
+<label for="fd">Description</label><input id="fd" autocomplete="off">
+<button class="btn" id="pub">Publish to my shop</button><button class="btn alt" id="again">Speak again</button>
+<p class="msg" id="m2" aria-live="polite"></p></div></div>
+</div></section>
+
+<section class="view" id="v-shop">
+<h1 id="shoptitle" style="font-size:32px">Lakshmi Stores</h1>
+<p style="color:var(--mute);margin:4px 0 0">Sample products and simulated orders. No real payments.</p>
+<p class="msg" id="m3" aria-live="polite"></p><div class="shop" id="shop"></div></section>
+
+<section class="view" id="v-about">
+<h1 style="font-size:32px">Voice2Sell</h1>
+<p class="s" style="font:italic 18px var(--serif);color:var(--blue);margin:4px 0 14px">Speak · Sell · Grow</p>
+<p style="max-width:62ch">Small shop owners often struggle to sell online because many e-commerce platforms are complex and need typing and digital skills. Voice2Sell lets them describe a product by speaking. The speech becomes editable name, price and description, and after the seller confirms it, the product appears in an online shop.</p>
+<div class="cols">
+<div><h3>What could go wrong</h3><p>Speech recognition may miss a word or an accent. So nothing goes live straight from the microphone: the seller edits and confirms first. Later: more regional languages, stock updates, order management.</p>
+<h3 style="margin-top:20px">Who it helps</h3><ul><li>Local shop owners, small retailers, independent sellers</li><li>Sellers who prefer speaking to typing</li><li>Customers looking for local products online</li></ul></div>
+<div><h3>Project</h3><dl><dt>Domain</dt><dd>E-Commerce and Digital Ecosystem</dd><dt>Category</dt><dd>Software</dd><dt>Team</dt><dd>Tech Squad: Rakshana M, Kowsalya J, Kavi Dharshini S</dd><dt>College</dt><dd>KPR Institute of Engineering and Technology</dd></dl>
+<h3 style="margin-top:20px">Research</h3><ul><li>Digital challenges of small and micro-business owners</li><li>Speech-to-text documentation</li><li>Accessible e-commerce design for small sellers</li></ul></div>
+</div></section>
+</main>
+<script>
+var $=function(i){return document.getElementById(i)},signed=false,rec=null,pal=["#0f3a6b","#2f6fb5","#1c5a8f","#3b7fb8","#16477a"];
+var N={one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,twenty:20,thirty:30,forty:40,fifty:50,sixty:60,seventy:70,eighty:80,ninety:90,hundred:100,"இருபது":20,"முப்பது":30,"நாற்பது":40,"ஐம்பது":50,"அறுபது":60,"எழுபது":70,"எண்பது":80,"தொண்ணூறு":90,"நூறு":100,"பத்து":10,"ஐந்து":5};
+var UNIT=/^(kilo|kilos|kg|gram|grams|g|litre|liter|dozen|piece|pieces|packet|கிலோ|கிராம்|லிட்டர்|டஜன்|பாக்கெட்)$/i,RS=/^(rupees|rupee|rs|ரூபாய்|ரூபா)$/i;
+var items=[{n:"Banana leaf bundle",q:"10 pieces",p:30,d:"Cut fresh every morning"},{n:"Filter coffee powder",q:"250 g",p:140,d:"Roasted in small batches"},{n:"Cotton thorthu",q:"1 piece",p:60,d:"Handwoven and soft"}];
+function num(t){if(!t)return null;t=t.toLowerCase().replace(/[₹,]/g,"");return /^\d+$/.test(t)?+t:(N[t]===undefined?null:N[t])}
+function parse(s){
+ var t=s.replace(/[,.]/g," ").trim().split(/\s+/),pi=-1,pe=-1,price="",qi=-1,qe=-1,q="";
+ t.forEach(function(w,i){if(pi<0){
+  if(RS.test(w)){if(num(t[i-1])!==null){price=num(t[i-1]);pi=i-1;pe=i}else if(num(t[i+1])!==null){price=num(t[i+1]);pi=i;pe=i+1}}
+  else if(/^₹\d+$/.test(w)){price=num(w);pi=i;pe=i}
+  else if(/^(for|at)$/i.test(w)&&/^\d+$/.test(t[i+1]||"")&&!UNIT.test(t[i+2]||"")){price=+t[i+1];pi=i;pe=i+1}}});
+ t.forEach(function(w,i){if(qi<0&&UNIT.test(w)){var a=t[i-1]||"",v=num(a)||(/^(ஒரு|a)$/i.test(a)?1:null);
+  qi=(v||/^per$/i.test(a))?i-1:i;qe=i;q=(/^per$/i.test(a)?"per ":(v?v+" ":""))+w}});
+ var cuts=[qi,pi].filter(function(x){return x>=0}),end=cuts.length?Math.min.apply(null,cuts):t.length;
+ var name=t.slice(0,end).join(" "),after=Math.max(pe,qe)+1,d=t.slice(after>0?after:end).join(" ");
+ if(name)name=name.charAt(0).toUpperCase()+name.slice(1);if(d)d=d.charAt(0).toUpperCase()+d.slice(1);
+ return{n:name,q:q,p:price,d:d}}
+function step(n){["s1","s2","s3","s4"].forEach(function(id,i){$(id).className=i+1<n?"done":i+1===n?"on":""})}
+function screen(id){["sc-in","sc-voice","sc-rev"].forEach(function(x){$(x).className="screen"+(x===id?" on":"")})}
+function msg(id,m){$(id).textContent=m}
+function show(v){["sell","shop","about"].forEach(function(x){$("v-"+x).className="view"+(x===v?" on":"");document.querySelector('nav a[data-v="'+x+'"]').className=x===v?"on":""});
+ if(v==="sell"){if(signed){screen("sc-voice");step(1)}else{screen("sc-in");step(0)}}}
+function route(){var h=location.hash.replace("#","");show(["sell","shop","about"].indexOf(h)>=0?h:"sell")}
+window.addEventListener("hashchange",route);
+$("go").onclick=function(){var ph=$("ph").value.replace(/\D/g,"");
+ if(!$("shopn").value.trim()){msg("m0","Enter your shop name.");return}
+ if(ph.length!==10){msg("m0","Enter a 10-digit mobile number.");return}
+ signed=true;$("shoptitle").textContent=$("shopn").value.trim();screen("sc-voice");step(1)};
+function convert(text){
+ $("heard").textContent=text;step(2);msg("m1","Converting your words…");
+ setTimeout(function(){var o=parse(text);$("fn").value=o.n;$("fq").value=o.q;$("fp").value=o.p;$("fd").value=o.d;
+  var miss=[];if(!o.n)miss.push("name");if(o.p==="")miss.push("price");
+  $("revnote").textContent=miss.length?"We could not find the "+miss.join(" and ")+". Please fill it in, then publish.":"Fix anything the app heard wrongly, then publish.";
+  $("revnote").className="s"+(miss.length?" flag":"");msg("m1","");screen("sc-rev");step(3)},700)}
+document.querySelectorAll(".chip").forEach(function(c){c.onclick=function(){convert(c.dataset.s)}});
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+$("mic").onclick=function(){var m=$("mic");
+ if(!SR){msg("m1","This browser has no speech input. Tap a sample below.");return}
+ if(rec){rec.stop();return}
+ try{rec=new SR();rec.lang=$("lang").value;rec.interimResults=true;var last="";
+  rec.onresult=function(e){var s="";for(var i=0;i<e.results.length;i++)s+=e.results[i][0].transcript;last=s;$("heard").textContent=s};
+  rec.onerror=function(e){msg("m1",e.error==="not-allowed"||e.error==="service-not-allowed"?"Microphone is blocked here. Allow it, or tap a sample below.":"Could not hear you. Try again or tap a sample below.")};
+  rec.onend=function(){m.classList.remove("on");m.setAttribute("aria-label","Start speaking");rec=null;if(last.trim())convert(last)};
+  rec.start();m.classList.add("on");m.setAttribute("aria-label","Stop listening");msg("m1","Listening… tap again when done.")}
+ catch(x){rec=null;msg("m1","Microphone is not available here. Tap a sample below.")}};
+$("again").onclick=function(){$("heard").textContent="Tap the mic and speak.";screen("sc-voice");step(1)};
+$("pub").onclick=function(){var n=$("fn").value.trim(),p=$("fp").value.trim();
+ if(!n||!/^\d+$/.test(p)){msg("m2","Add a name and a price in numbers before publishing.");return}
+ items.unshift({n:n,q:$("fq").value.trim(),p:+p,d:$("fd").value.trim(),isnew:true});step(5);
+ ["fn","fq","fp","fd"].forEach(function(i){$(i).value=""});msg("m2","");$("heard").textContent="Tap the mic and speak.";
+ draw();msg("m3",n+" is now live in your shop.");location.hash="#shop"};
+function draw(){var box=$("shop");box.textContent="";
+ items.forEach(function(it,i){var e=document.createElement("div");e.className="item"+(it.isnew?" new":"");
+  var pic=document.createElement("div");pic.className="pic";pic.style.background=pal[i%pal.length];pic.textContent=it.n.charAt(0).toUpperCase();
+  var b=document.createElement("div");b.className="b";
+  var h=document.createElement("b");h.textContent=it.n;
+  var p=document.createElement("div");p.className="pr";p.textContent="₹"+it.p;
+  var s=document.createElement("small");s.textContent=[it.q,it.d].filter(Boolean).join(". ");
+  var bt=document.createElement("button");bt.className="btn alt";bt.textContent="Place demo order";
+  bt.onclick=function(){bt.textContent="Order noted";bt.disabled=true;msg("m3","Order for "+it.n+" noted. No payment taken in this demo.")};
+  b.appendChild(h);b.appendChild(p);b.appendChild(s);b.appendChild(bt);e.appendChild(pic);e.appendChild(b);box.appendChild(e)})}
+draw();route();
+</script></body></html>
